@@ -1,0 +1,60 @@
+server:
+  port: 8081
+spring:
+  security:
+    user:
+      name: 'admin'
+      password: '123456'
+      roles:
+        - admin
+        - user
+    jwt:
+      key: TAYDgnViuAWSBifRYnI
+      expire: 3
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      database: 0
+  datasource:
+    url: jdbc:mysql://localhost:3306/myweb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: OUkyouKA1234
+    hikari:
+      pool-name: HikariCP
+  jpa:
+    show-sql: false        # 开启SQL语句打印信息，方便develop模式下查看
+    hibernate:
+      ddl-auto: update    # 一般都是用updata，没有则创建，有则更新
+    open-in-view: false
+  mail:
+    username: jsdxzyl@foxmail.com      #邮箱名称
+    password: zwjevwqqbfwmbddc         #授权码
+    host: smtp.qq.com                  #qq的smtp地址
+    expire: 5     # 过期时间
+    limitTime: 60    # 冷却时间 限流
+#    queue: emailQueue
+#    exchange: mailExchange
+#    key: mail
+  rabbitmq:
+    freeHandle: false
+    addresses: localhost
+    username: zyl906168212
+    password: OUkyouKA1234
+    virtual-host: /myApp
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 10
+    #        acknowledge-mode: manual
+    host: localhost
+    port: 5672
+    publisher-confirm-type: correlated # 当发布者发布一条消息后，会收到一条与该消息相关的确认消息
+    publisher-returns: true # 开启回调 发布者返回机制，当发布消息是被后，服务器会返回一个消息给生产者
+  reset:
+    expireTime: 10
+
+
