@@ -1,6 +1,7 @@
 package com.example.Filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.Service.HalihapiUserDetails;
 import com.example.Util.JWTUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -35,7 +36,7 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
             String token = utils.convertToken(authorization);      //获取token
             DecodedJWT jwt = utils.resolveJWT(token);
             if (jwt != null){
-                UserDetails user = utils.toUserDetails(jwt);
+                HalihapiUserDetails user = utils.toUserDetails(jwt);
                 //使用UsernamePasswordAuthenticationToken作为实体，填写相关用户信息进去
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

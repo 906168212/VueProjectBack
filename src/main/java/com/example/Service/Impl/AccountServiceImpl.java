@@ -40,11 +40,13 @@ public class AccountServiceImpl implements UserDetailsService, AccountService {
         Account account = repository.findAccountByUsernameOrEmail(username,username);
         if (account == null)
             throw new UsernameNotFoundException("用户名或密码错误");
-        return User
+        int userID = account.getSid();
+        UserDetails user = User
                 .withUsername(username)
                 .password(account.getPassword())
                 .roles(account.getRole())
                 .build();
+        return new HalihapiUser(user,userID);
     }
     @Override
     public RestBeanNew<?> confirmResetAccount(String username) throws Exception {

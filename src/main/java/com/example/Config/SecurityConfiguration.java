@@ -2,10 +2,10 @@ package com.example.Config;
 
 import com.example.Entity.dto.Account;
 import com.example.Entity.RestBeanNew;
-import com.example.Entity.dto.AccountDetails;
 import com.example.Entity.vo.response.AuthorizeVO;
 import com.example.Filter.JwtAuthenticationFilter;
 import com.example.Repo.AccountRepository;
+import com.example.Service.Impl.HalihapiUser;
 import com.example.Util.JWTUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -108,11 +108,13 @@ public class SecurityConfiguration {
             //登录成功的处理
         } else if (ExceptionOrAuthentication instanceof Authentication auth) {
 
-            User user = (User) auth.getPrincipal();   // 获取用户登录后的信息 包括用户名、密码、角色
+            HalihapiUser user = (HalihapiUser) auth.getPrincipal();   // 获取用户登录后的信息 包括id,用户名、密码、角色
 //            AuthorizeVO vo = new AuthorizeVO();
             String token = utils.CreateJWT(user);     // 创建token令牌
-            String usernameOrEmail = user.getUsername();
-            Account account = repository.findAccountByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+            int userId = user.getUserID();
+//            String usernameOrEmail = user.getUsername();
+//            Account account = repository.findAccountByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+            Account account = repository.findAccountBySid(userId);
             // 用我们自行封装的DataBase方法,还可以再优雅一点！
             AuthorizeVO vo = account.asViewObject(AuthorizeVO.class,v ->{
                 v.setExpireTime(utils.expireTime.getTime());  //过期时间戳

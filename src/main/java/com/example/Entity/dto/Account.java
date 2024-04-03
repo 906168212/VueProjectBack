@@ -4,6 +4,8 @@ import com.example.Entity.BaseData;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "account")
@@ -14,6 +16,8 @@ public class Account implements BaseData {
             int sid;
     @Column(name = "username")
     String username;
+    @Column(name = "nickname")
+    String nickname;
     @Column(name = "password")
     String password;
     @Column(name = "email")
@@ -27,4 +31,6 @@ public class Account implements BaseData {
     private LevelInfo levelInfo;
     @OneToOne(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private VipInfo vipInfo;
+    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<ArticleInfo> articleInfoList;
 }

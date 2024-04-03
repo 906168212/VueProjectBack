@@ -1,14 +1,15 @@
 package com.example;
 
-import com.example.Entity.dto.Account;
-import com.example.Entity.dto.AccountDetails;
-import com.example.Entity.dto.LevelInfo;
-import com.example.Entity.dto.VipInfo;
+import com.example.Entity.dto.*;
 import com.example.Repo.AccountRepository;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.Random;
 
 @SpringBootTest
 class WebTestApplicationTests {
@@ -19,28 +20,31 @@ class WebTestApplicationTests {
     @Test
     void contextLoads() {
         Account account = accountRepository.findAccountBySid(1);
-        VipInfo vipInfo = new VipInfo();
-        vipInfo.setStatus(1);
-        vipInfo.setType(3);
-        vipInfo.setOpeningTime(System.currentTimeMillis());
-        vipInfo.setExpireTime(Long.MAX_VALUE); // 永久
+        List<ArticleInfo> articleInfoList = account.getArticleInfoList();
 
-        vipInfo.setAccount(account);
-        account.setVipInfo(vipInfo);
-        // 设置关联的 Account 对象
-//        accountDetails.setAccount(account);
-        // 关联 accountDetails 到 account
-//        account.setAccountDetails(newAccountDetails);
+        for(int a = 1;a<=10;a++){
+            ArticleInfo articleInfo = new ArticleInfo();
+
+            articleInfo.setAccount(account);
+
+            articleInfo.setStatus(1);
+            articleInfo.setTitle("测试用标题_"+a);
+            articleInfo.setDesc("这是一段测试用的文章描述_"+a);
+            articleInfo.setCategory("PC游戏");
+            articleInfo.setPicWebp("https://picsum.photos/672/378.webp?"+Math.random());
+            articleInfo.setPubDate(System.currentTimeMillis());
+            articleInfo.setRecommend(1);
+            ArticleStat articleStat = new ArticleStat();
+            articleStat.setArticleInfo(articleInfo);
+            articleStat.setLike(new Random().nextInt(8999)+1000);
+            articleStat.setReview(new Random().nextInt(8999)+1000);
+            articleStat.setCollect(new Random().nextInt(8999)+1000);
+            articleStat.setVisitor(new Random().nextInt(18999)+1000);
+            articleInfo.setArticleStat(articleStat);
+            articleInfoList.add(articleInfo);
+        }
+        account.setArticleInfoList(articleInfoList);
         accountRepository.save(account);
-//
-//
-//        accountDetails.setConcernedNum(0);
-//        accountDetails.setFanNum(0);
-//        accountDetails.setMotionNum(0);
-//        accountDetails.setPointCoin(10.0F);
-//        accountDetails.setFuture_coin(0.0F);
-//        account.setAccountDetails(accountDetails); // 将 accountDetails 关联到 account
-//        accountRepository.save(account); // 保存 account
     }
 
 }
