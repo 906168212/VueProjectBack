@@ -36,12 +36,14 @@ public class SecurityConfiguration {
     @Resource
     AccountRepository repository;
 
+    String testURL = "/api/article/**";
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security)throws Exception{
         return security
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(conf -> {
-                    conf.requestMatchers("/api/auth/**","/api/resetPassword/**","/api/QRCode/**").permitAll();
+                    conf.requestMatchers("/api/auth/**","/api/resetPassword/**","/api/QRCode/**",testURL).permitAll();
                     conf.anyRequest().authenticated();
                 })
                 // 登录页面请求  默认放权

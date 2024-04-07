@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
@@ -59,6 +60,25 @@ public class AccountServiceImpl implements UserDetailsService, AccountService {
         //改变重设密码状态
         updateResetAccountInfo(username,email, reset_uuid);
         return RestBeanNew.success(askAccountSuccessMessage,"账号存在");
+    }
+
+    @Override
+    @Transactional
+    public Account getAllAccount(int userID) {
+        return repository.findAccountBySidWithAll(userID);
+    }
+
+
+    @Override
+    @Transactional
+    public Account getInfoAccount(int userID) {
+        return repository.findAccountBySidWithInfo(userID);
+    }
+
+    @Override
+    @Transactional
+    public Account getAccountArticle(int userID) {
+        return repository.findAccountBySidWithArticle(userID);
     }
 
     private Account findAccount(String username) {

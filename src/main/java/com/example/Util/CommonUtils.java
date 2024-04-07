@@ -1,5 +1,7 @@
 package com.example.Util;
 
+import com.example.Service.HalihapiUserDetails;
+import com.example.Service.Impl.HalihapiUser;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
@@ -49,4 +51,13 @@ public class CommonUtils {
         }else return "";
     }
 
+    public Integer getAuthenticationUserID() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication!=null && authentication.isAuthenticated()){
+            HalihapiUserDetails user = (HalihapiUserDetails) authentication.getPrincipal();
+            return user.getUserID();
+        }else {
+            throw new Exception("内部参数错误");
+        }
+    }
 }

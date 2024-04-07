@@ -1,6 +1,9 @@
 package com.example.Entity.dto;
 
 import com.example.Entity.BaseData;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +12,44 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "account")
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "account.info",
+                attributeNodes = {
+                        @NamedAttributeNode("accountDetails"),
+                        @NamedAttributeNode("levelInfo"),
+                        @NamedAttributeNode("vipInfo")
+                }
+        ),
+        @NamedEntityGraph(
+                name = "account.article",
+                attributeNodes = {
+                        @NamedAttributeNode(value="articleInfoList",subgraph = "articleInfoListGraph"),
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name="articleInfoListGraph",
+                                attributeNodes = @NamedAttributeNode("articleStat")
+                        )
+                }
+        ),
+        @NamedEntityGraph(
+                name = "account.all",
+                attributeNodes = {
+                        @NamedAttributeNode("accountDetails"),
+                        @NamedAttributeNode("levelInfo"),
+                        @NamedAttributeNode("vipInfo"),
+                        @NamedAttributeNode(value="articleInfoList",subgraph = "articleInfoListGraph"),
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name="articleInfoListGraph",
+                                attributeNodes = @NamedAttributeNode("articleStat")
+                        )
+                }
+        )
+})
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Account implements BaseData {
     @Id     //表明主键
             @Column(name = "sid")       //表明数据表中的名称
@@ -25,12 +66,16 @@ public class Account implements BaseData {
     @Column(name = "role")
     String role;
 
-    @OneToOne(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "details_id")
     private AccountDetails accountDetails;
-    @OneToOne(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "level_id")
     private LevelInfo levelInfo;
-    @OneToOne(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "vip_id")
     private VipInfo vipInfo;
-    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"account"})
     private List<ArticleInfo> articleInfoList;
 }

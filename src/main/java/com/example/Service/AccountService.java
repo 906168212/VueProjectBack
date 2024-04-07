@@ -9,4 +9,8 @@ import java.util.Map;
 public interface AccountService extends UserDetailsService {
     RestBeanNew<?> confirmResetAccount(String username) throws Exception;
 
+    Account getAllAccount(int userID);
+
+    Account getInfoAccount(int userID);
+    Account getAccountArticle(int userID);
 }

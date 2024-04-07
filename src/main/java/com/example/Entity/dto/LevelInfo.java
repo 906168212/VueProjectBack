@@ -12,9 +12,6 @@ public class LevelInfo implements BaseData {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 自增
     int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_sid", referencedColumnName = "sid")
-    private Account account;
 
     @Column(name = "current_exp")
     private int currentExp;

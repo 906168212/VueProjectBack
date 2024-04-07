@@ -6,6 +6,8 @@ import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -18,15 +20,14 @@ class WebTestApplicationTests {
     AccountRepository accountRepository;
 
     @Test
+    @Transactional
+    @Rollback(false)
     void contextLoads() {
-        Account account = accountRepository.findAccountBySid(1);
+        Account account = accountRepository.findAccountBySid(2);
         List<ArticleInfo> articleInfoList = account.getArticleInfoList();
-
-        for(int a = 1;a<=10;a++){
+        for(int a = 1;a<=30;a++){
             ArticleInfo articleInfo = new ArticleInfo();
-
             articleInfo.setAccount(account);
-
             articleInfo.setStatus(1);
             articleInfo.setTitle("测试用标题_"+a);
             articleInfo.setDesc("这是一段测试用的文章描述_"+a);
@@ -34,8 +35,8 @@ class WebTestApplicationTests {
             articleInfo.setPicWebp("https://picsum.photos/672/378.webp?"+Math.random());
             articleInfo.setPubDate(System.currentTimeMillis());
             articleInfo.setRecommend(1);
+
             ArticleStat articleStat = new ArticleStat();
-            articleStat.setArticleInfo(articleInfo);
             articleStat.setLike(new Random().nextInt(8999)+1000);
             articleStat.setReview(new Random().nextInt(8999)+1000);
             articleStat.setCollect(new Random().nextInt(8999)+1000);

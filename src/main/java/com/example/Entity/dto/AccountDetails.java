@@ -11,9 +11,6 @@ public class AccountDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 自增
     int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_sid", referencedColumnName = "sid")
-    private Account account;
 
     @Column(name = "point_coin")
     private float pointCoin;
