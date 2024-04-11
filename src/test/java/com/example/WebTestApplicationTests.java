@@ -31,10 +31,10 @@ class WebTestApplicationTests {
             articleInfo.setStatus(1);
             articleInfo.setTitle("测试用标题_"+a);
             articleInfo.setDesc("这是一段测试用的文章描述_"+a);
-            articleInfo.setCategory("PC游戏");
+            articleInfo.setCategory(0);
             articleInfo.setPicWebp("https://picsum.photos/672/378.webp?"+Math.random());
             articleInfo.setPubDate(System.currentTimeMillis());
-            articleInfo.setRecommend(1);
+            articleInfo.setRecommend(new Random().nextInt(2));
 
             ArticleStat articleStat = new ArticleStat();
             articleStat.setLike(new Random().nextInt(8999)+1000);

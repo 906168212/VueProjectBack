@@ -2,6 +2,9 @@ package com.example.Util;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 // 这个工具类用于统一归类属性，方便统一修改，比如在Redis中的前缀等等
 public class Const {
     public static final String VERIFY_EMAIL_LIMIT = "verify:email:limit:";
@@ -52,11 +55,10 @@ public class Const {
             this.name = name;
             this.maxExp = maxExp;
         }
-
     }
 
-
-
-
+    public static final Map<Integer,String> categoryMap = Map.of(
+            0,"PC游戏", 1,"模拟器游戏", 2,"至高之神", 3,"手机游戏",4,"游戏插件"
+    );
 
 }
