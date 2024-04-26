@@ -28,4 +28,7 @@ import java.util.List;
         @EntityGraph(value = "articleInfo_with_articleStat")
         @Query(value = "SELECT a from ArticleInfo a where a.type = ?1 ORDER BY a.createTime DESC LIMIT 2")
         List<ArticleInfo> findLatestArticleInfos(int type);
+
+        @EntityGraph(value = "articleInfo_with_articleStat")
+        List<ArticleInfo> findArticleInfosByAccount_SidAndStatusOrderByPubDateDesc(int sid,int status);
     }

@@ -36,7 +36,7 @@ public class SecurityConfiguration {
     @Resource
     AccountRepository repository;
 
-    String testURL = "/api/article/**";
+    String testURL = "/api/test/**";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security)throws Exception{

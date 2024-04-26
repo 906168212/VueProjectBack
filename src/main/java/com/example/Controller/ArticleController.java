@@ -1,12 +1,13 @@
 package com.example.Controller;
 
 import com.example.Entity.RestBeanNew;
-import com.example.Entity.dto.ArticleDTO;
-import com.example.Entity.dto.ArticleInfo;
+import com.example.Entity.dto.*;
 import com.example.Entity.vo.ArticleVO;
+import com.example.Repo.AccountRepository;
 import com.example.Repo.ArticleInfoRepository;
 import com.example.Service.AccountService;
 import com.example.Util.CommonUtils;
+import com.example.mapper.ArticleMapper;
 import com.example.mapper.MainMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,23 @@ public class ArticleController {
     MainMapper mapper;
     @Resource
     ArticleInfoRepository articleInfoRepository;
+    @Resource
+    ArticleMapper articleMapper;
+    @Resource
+    AccountRepository accountRepository;
+
+    @GetMapping("/all")
+    @Transactional
+    public RestBeanNew<?> getAllArticle() throws Exception {
+        int uid = utils.getAuthenticationUserID();
+        Account account = accountRepository.findAccountBySid(uid);
+        List<ArticleInfo> articleInfoList = articleInfoRepository.findArticleInfosByAccount_SidAndStatusOrderByPubDateDesc(uid,1);
+        List<UserArticleDTO> userArticleDTOList = articleMapper.toUserArticleDTOList(articleInfoList);
+        UserAllArticleDTO userAllArticleDTOList = articleMapper.toUserAllArticleDTO(account,userArticleDTOList);
+//        List<ArticleDTO> articleDTOList = mapper.toArticleDTOList(articleInfoList);
+//        List<ArticleVO> articleVOList = mapper.toArticleVOList(articleDTOList);
+        return RestBeanNew.success(userAllArticleDTOList);
+    }
 
     @GetMapping("/recommend")
     @Transactional

@@ -18,9 +18,6 @@ public class LevelInfo implements BaseData {
 
     @Column(name = "current_level")
     private int currentLevel;
-
-    @Column(name = "current_level_name")
-    private String currentLevelName;
     @Column(name = "next_exp")
     private Integer nextExp;
 }

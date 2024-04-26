@@ -1,9 +1,6 @@
 package com.example.mapper;
 
-import com.example.Entity.dto.Account;
-import com.example.Entity.dto.ArticleDTO;
-import com.example.Entity.dto.ArticleInfo;
-import com.example.Entity.dto.SimpleUserDTO;
+import com.example.Entity.dto.*;
 import com.example.Entity.vo.ArticleVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,4 +18,7 @@ public interface MainMapper {
 
     ArticleVO toArticleVO(ArticleDTO articleDTO);
     List<ArticleVO> toArticleVOList(List<ArticleDTO> articleDTOList);
+
+
+
 }

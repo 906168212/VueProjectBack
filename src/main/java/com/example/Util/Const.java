@@ -21,6 +21,7 @@ public class Const {
     public static final String DEAD_LETTER_QUEUE_ROUTING_KEY = "deadEmail.key";
     public static final Integer X_MAX_LENGTH = 10;
     public static final Integer X_TTL = 10000;
+    public static final Integer ARTICLE_TYPE = 15;
 
     public static class SendEmailLogStatus {
         public static final int CONSUME_PROCESS = 0;
@@ -60,5 +61,10 @@ public class Const {
     public static final Map<Integer,String> categoryMap = Map.of(
             0,"PC游戏", 1,"模拟器游戏", 2,"至高之神", 3,"手机游戏",4,"游戏插件"
     );
-
+    public static final Map<Integer,String> typeMap = new HashMap<>() {{
+        put(0,"动漫");put(1,"漫画");put(2,"游戏");put(3,"吃瓜");
+        put(4,"热点");put(5,"资讯");put(6,"电影");put(7,"美食");
+        put(8,"旅游");put(9,"知识");put(10,"单机游戏");put(11,"生活");
+        put(12,"工具");put(13,"asmr");put(14,"网站大全");put(15,"精品");
+    }};
 }

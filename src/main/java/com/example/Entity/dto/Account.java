@@ -1,12 +1,13 @@
 package com.example.Entity.dto;
 
 import com.example.Entity.BaseData;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -65,7 +66,14 @@ public class Account implements BaseData {
     String email;
     @Column(name = "role")
     String role;
+    @Column
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp createTime;
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "wallet_wid")
+    private Wallet wallet;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "details_id")
     private AccountDetails accountDetails;
@@ -75,6 +83,7 @@ public class Account implements BaseData {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "vip_id")
     private VipInfo vipInfo;
+
     @OneToMany(mappedBy = "account",cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"account"})
     private List<ArticleInfo> articleInfoList;

@@ -1,7 +1,7 @@
 package com.example.Util;
 
+import com.example.Repo.AccountRepository;
 import com.example.Service.HalihapiUserDetails;
-import com.example.Service.Impl.HalihapiUser;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
@@ -11,15 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @Slf4j
 public class CommonUtils {
     @Resource
     RedisTemplate<String,Object> redisTemplate;
+
     public Integer randomFiveCode(){return new Random().nextInt(899999) + 100000;}
     public String getUUID(){
         return UUID.randomUUID().toString();
@@ -60,4 +59,5 @@ public class CommonUtils {
             throw new Exception("内部参数错误");
         }
     }
+
 }

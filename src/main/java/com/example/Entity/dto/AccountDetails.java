@@ -9,21 +9,8 @@ import lombok.Data;
 public class AccountDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 自增
-    int id;
-
-
-    @Column(name = "point_coin")
-    private float pointCoin;
-
-    @Column(name = "future_coin")
-    private float future_coin;
-
-    @Column(name = "concerned_num")
+    private int id;
     private int concernedNum;
-
-    @Column(name = "motion_num")
     private int motionNum;
-
-    @Column(name = "fan_num")
     private int fanNum;
 }

@@ -1,6 +1,7 @@
 package com.example.Repo;
 
 import com.example.Entity.dto.Account;
+import com.example.Entity.dto.ArticleInfo;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

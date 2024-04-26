@@ -4,6 +4,7 @@ import com.example.Entity.RestBeanNew;
 import com.example.Service.QRCodeService;
 import com.google.zxing.WriterException;
 import jakarta.annotation.Resource;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,4 +29,6 @@ public class QRCodeController {
         return RestBeanNew.success(qrCode,"生成二维码");
 //        return RestBeanNew.failure(400,"二维码生成失败");
     }
+
+
 }
